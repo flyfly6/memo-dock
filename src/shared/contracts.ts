@@ -21,15 +21,15 @@ export type ItemSnapshot = ItemMetadata & { content: string };
 
 export type WebviewMessage =
   | { type: 'ready' }
-  | { type: 'create'; kind: ItemKind; title: string; language?: string }
-  | { type: 'saveMarkdown'; id: string; title: string; content: string }
+  | { type: 'createSnippet'; title: string; language: string }
+  | { type: 'saveMarkdown'; id: string; content: string }
   | { type: 'updateSnippet'; id: string; title: string; language: string }
-  | { type: 'deleteItem'; id: string }
+  | { type: 'deleteSnippet'; id: string }
   | { type: 'openSnippet'; id: string }
   | { type: 'copySnippet'; id: string };
 
 export type HostMessage =
-  | { type: 'snapshot'; items: ItemSnapshot[]; focusId?: string }
+  | { type: 'snapshot'; items: ItemSnapshot[] }
   | { type: 'error'; message: string }
   | { type: 'notice'; message: string };
 
@@ -68,17 +68,13 @@ export function parseWebviewMessage(value: unknown): WebviewMessage | undefined 
     return { type: 'ready' };
   }
 
-  if (value.type === 'create') {
+  if (value.type === 'createSnippet') {
     const title = readString(value.title, MAX_TITLE_LENGTH);
-    const kind = value.kind === 'markdown' || value.kind === 'snippet' ? value.kind : undefined;
-    if (!title || !kind) {
+    if (!title) {
       return undefined;
     }
-    if (kind === 'markdown') {
-      return { type: 'create', kind, title };
-    }
     const language = readString(value.language, MAX_LANGUAGE_LENGTH) ?? 'plaintext';
-    return { type: 'create', kind, title, language };
+    return { type: 'createSnippet', title, language };
   }
 
   const id = readId(value.id);
@@ -88,18 +84,15 @@ export function parseWebviewMessage(value: unknown): WebviewMessage | undefined 
 
   switch (value.type) {
     case 'saveMarkdown': {
-      const title = readString(value.title, MAX_TITLE_LENGTH);
       const content = readString(value.content, MAX_MARKDOWN_LENGTH, true);
-      return title && content !== undefined
-        ? { type: 'saveMarkdown', id, title, content }
-        : undefined;
+      return content !== undefined ? { type: 'saveMarkdown', id, content } : undefined;
     }
     case 'updateSnippet': {
       const title = readString(value.title, MAX_TITLE_LENGTH);
       const language = readString(value.language, MAX_LANGUAGE_LENGTH);
       return title && language ? { type: 'updateSnippet', id, title, language } : undefined;
     }
-    case 'deleteItem':
+    case 'deleteSnippet':
     case 'openSnippet':
     case 'copySnippet':
       return { type: value.type, id };
@@ -113,7 +106,7 @@ export function isHostMessage(value: unknown): value is HostMessage {
     return false;
   }
   if (value.type === 'snapshot') {
-    return Array.isArray(value.items) && (value.focusId === undefined || isItemId(value.focusId));
+    return Array.isArray(value.items);
   }
   return (value.type === 'error' || value.type === 'notice') && typeof value.message === 'string';
 }

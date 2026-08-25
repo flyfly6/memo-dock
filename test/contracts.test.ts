@@ -8,34 +8,29 @@ test('parses valid boundary messages', () => {
   assert.deepEqual(parseWebviewMessage({ type: 'ready' }), { type: 'ready' });
   assert.deepEqual(
     parseWebviewMessage({
-      type: 'create',
-      kind: 'snippet',
+      type: 'createSnippet',
       title: ' Fetch ',
       language: 'typescript',
     }),
     {
-      type: 'create',
-      kind: 'snippet',
+      type: 'createSnippet',
       title: 'Fetch',
       language: 'typescript',
     },
   );
-  assert.deepEqual(
-    parseWebviewMessage({ type: 'saveMarkdown', id, title: 'Todo', content: '- [ ] ship' }),
-    {
-      type: 'saveMarkdown',
-      id,
-      title: 'Todo',
-      content: '- [ ] ship',
-    },
-  );
+  assert.deepEqual(parseWebviewMessage({ type: 'saveMarkdown', id, content: '- [ ] ship' }), {
+    type: 'saveMarkdown',
+    id,
+    content: '- [ ] ship',
+  });
 });
 
 test('rejects path-like ids and invalid payloads', () => {
-  assert.equal(parseWebviewMessage({ type: 'deleteItem', id: '../index' }), undefined);
-  assert.equal(parseWebviewMessage({ type: 'create', kind: 'markdown', title: '   ' }), undefined);
+  assert.equal(parseWebviewMessage({ type: 'deleteSnippet', id: '../index' }), undefined);
+  assert.equal(parseWebviewMessage({ type: 'createSnippet', title: '   ' }), undefined);
   assert.equal(
-    parseWebviewMessage({ type: 'saveMarkdown', id, title: 'x', content: 1 }),
+    parseWebviewMessage({ type: 'create', kind: 'markdown', title: 'Notes' }),
     undefined,
   );
+  assert.equal(parseWebviewMessage({ type: 'saveMarkdown', id, content: 1 }), undefined);
 });

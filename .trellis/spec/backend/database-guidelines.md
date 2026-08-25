@@ -20,6 +20,8 @@ globalStorageUri/
 - Use `vscode.workspace.fs` and `Uri.joinPath`, not Node `fs` or `uri.fsPath`, so remote extension hosts work.
 - Write a body before adding/updating its metadata entry.
 - Missing indexed bodies are skipped; orphan bodies are ignored. Do not add migrations until a real format change exists.
+- Markdown is a singleton product concept. Call `ensureMarkdown()` before the first Webview snapshot; it creates a UUID-backed empty body only when no Markdown metadata exists.
+- Do not expose Markdown create/delete/rename operations across the Webview boundary. `saveMarkdown(id, content)` preserves the internal title and only updates the body and `updatedAt`.
 - Serialize writes through the provider's single operation queue. Split locks only if measured throughput requires it.
 - Do not call `globalState.setKeysForSync`; data is current-profile only.
 

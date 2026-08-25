@@ -13,7 +13,7 @@
 - Keep BlockNote packages on the compatible `0.54.0` line.
 - Keep the Tiptap packages used by BlockNote overridden to `3.30.2` until the incomplete 3.30.3 release is no longer selected.
 - Do not add `@blocknote/xl-*`; those packages use a different license and are outside scope.
-- Reuse React and BlockNote capabilities before adding UI/state dependencies.
+- Reuse the installed Mantine Core, React, and BlockNote capabilities before adding UI/state dependencies.
 
 ## Checks
 

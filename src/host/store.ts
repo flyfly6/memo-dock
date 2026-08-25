@@ -2,7 +2,6 @@ import { randomUUID } from 'node:crypto';
 import * as vscode from 'vscode';
 import {
   isItemId,
-  type ItemKind,
   type ItemMetadata,
   type ItemSnapshot,
   type MarkdownMetadata,
@@ -71,13 +70,36 @@ export class MemoStore {
       .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   }
 
-  async create(kind: ItemKind, title: string, language = 'plaintext'): Promise<ItemSnapshot> {
+  async ensureMarkdown(): Promise<void> {
+    const index = await this.readIndex();
+    if (index.some((item) => item.kind === 'markdown')) {
+      return;
+    }
+
     const now = new Date().toISOString();
     const id = randomUUID();
-    const metadata: ItemMetadata =
-      kind === 'markdown'
-        ? { id, kind, title, createdAt: now, updatedAt: now }
-        : { id, kind, title, language, createdAt: now, updatedAt: now };
+    const metadata: MarkdownMetadata = {
+      id,
+      kind: 'markdown',
+      title: 'Markdown',
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    await vscode.workspace.fs.writeFile(this.bodyUri(metadata), encoder.encode(''));
+    await this.writeIndex([...index, metadata]);
+  }
+
+  async createSnippet(title: string, language: string): Promise<ItemSnapshot> {
+    const now = new Date().toISOString();
+    const metadata: SnippetMetadata = {
+      id: randomUUID(),
+      kind: 'snippet',
+      title,
+      language,
+      createdAt: now,
+      updatedAt: now,
+    };
 
     await vscode.workspace.fs.writeFile(this.bodyUri(metadata), encoder.encode(''));
     const index = await this.readIndex();
@@ -85,7 +107,7 @@ export class MemoStore {
     return { ...metadata, content: '' };
   }
 
-  async saveMarkdown(id: string, title: string, content: string): Promise<void> {
+  async saveMarkdown(id: string, content: string): Promise<void> {
     const index = await this.readIndex();
     const position = index.findIndex((item) => item.id === id && item.kind === 'markdown');
     if (position < 0) {
@@ -93,7 +115,7 @@ export class MemoStore {
     }
 
     const current = index[position] as MarkdownMetadata;
-    const updated: MarkdownMetadata = { ...current, title, updatedAt: new Date().toISOString() };
+    const updated: MarkdownMetadata = { ...current, updatedAt: new Date().toISOString() };
     await vscode.workspace.fs.writeFile(this.bodyUri(updated), encoder.encode(content));
     index[position] = updated;
     await this.writeIndex(index);
@@ -111,9 +133,9 @@ export class MemoStore {
     await this.writeIndex(index);
   }
 
-  async delete(id: string): Promise<void> {
+  async deleteSnippet(id: string): Promise<void> {
     const index = await this.readIndex();
-    const item = index.find((entry) => entry.id === id);
+    const item = index.find((entry) => entry.id === id && entry.kind === 'snippet');
     if (!item) {
       return;
     }

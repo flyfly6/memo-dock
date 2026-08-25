@@ -4,63 +4,67 @@
 
 - **Persisted content**: metadata and body files owned by the extension host.
 - **Host snapshot**: serializable `ItemSnapshot[]` mirrored in React state.
-- **Local navigation**: active tab and search query, stored with `vscodeApi.setState`.
-- **Ephemeral UI**: selected item, open form, and toast text.
+- **Local navigation**: active tab and Snippet search query, stored with `vscodeApi.setState`.
+- **Ephemeral UI**: snapshot-loaded state, open Snippet form, and toast text.
 - **Editor state**: owned by the active BlockNote instance and serialized back to Markdown.
 
 ## Rules
 
 - Never treat Webview state as the content source of truth.
 - Derive filtered lists with `filterItems`; do not maintain a second filtered array.
-- Apply one search query to both tabs, then filter by the active kind.
+- Apply the search query only to Snippets; the singleton Markdown document always opens directly.
 - Send intentions to the host and accept the next snapshot instead of mutating a second persistence model locally.
 - Do not add Redux, Zustand, Context, or a server-state library for this scope.
 
 ## Example
 
-`src/webview/App.tsx` stores `{ tab, query }` through the singleton in `vscode.ts`, while items are replaced only by a validated host snapshot.
+`src/webview/App.tsx` stores `{ tab, query }` through the singleton in `vscode.ts`, while items are replaced only by a validated host snapshot and the first Markdown item mounts directly.
 
-## Scenario: Save Responses and Destructive Navigation
+## Scenario: Singleton Markdown Lifecycle
 
 ### 1. Scope / Trigger
 
-- Applies when a Webview action both changes persisted content and can change the active editor.
+- Applies whenever the Markdown Tab, its message contract, or profile storage lifecycle changes.
 
 ### 2. Signatures
 
-- `MemoDockProvider.refresh(focusId?: string): Promise<void>`
-- `MarkdownEditorProps.onDelete(id: string): boolean`
+- `MemoStore.ensureMarkdown(): Promise<void>`
+- `MemoStore.saveMarkdown(id: string, content: string): Promise<void>`
+- `WebviewMessage`: `{ type: 'saveMarkdown'; id: string; content: string }`
+- `HostMessage`: `{ type: 'snapshot'; items: ItemSnapshot[] }`
 
 ### 3. Contracts
 
-- `focusId` is only for explicit navigation, such as focusing a newly created Markdown document.
-- Ordinary save snapshots omit `focusId`; an older save response must not reopen an editor the user left.
-- `onDelete` returns `false` when confirmation is cancelled and no queued save state may be discarded.
+- `ready` calls `ensureMarkdown()` before the first snapshot so a fresh profile opens directly into an editor.
+- The Markdown title is internal metadata. The Webview cannot create, rename, or delete Markdown documents.
+- The editor sends only id and content; the store preserves internal metadata while updating content and `updatedAt`.
+- Snapshot echoes must not replace BlockNote content when the document id is unchanged.
 
 ### 4. Validation & Error Matrix
 
-- Save succeeds after Back -> refresh list, keep the list visible.
-- Delete is cancelled -> retain the pending debounce and editor selection.
-- Delete is confirmed -> discard the pending save, post `deleteItem`, then leave the editor.
+- Fresh profile -> create one UUID-backed Markdown body, then return it in the snapshot.
+- Existing singleton -> do not create another body or metadata entry.
+- Invalid id or oversized/non-string content -> reject in `parseWebviewMessage` before I/O.
+- Missing Markdown id during save -> report `Markdown document not found.` through the normal error message path.
 
 ### 5. Good/Base/Bad Cases
 
-- Good: creation refreshes with the new id; later saves refresh without one.
-- Base: a save while the editor stays open updates the host snapshot without replacing BlockNote state.
-- Bad: every save echoes `focusId`, or cancellation clears the save timer before confirmation succeeds.
+- Good: first `ready` creates the note and the Markdown Tab immediately mounts BlockNote.
+- Base: typing, checklist changes, slash insertion, and drag reorder share the same debounced save path.
+- Bad: exposing Markdown create/delete controls, trusting a title from the Webview, or recreating editor blocks after every save snapshot.
 
 ### 6. Tests Required
 
-- Verify Back during a pending save remains on the list after the save snapshot arrives.
-- Verify cancelling Delete preserves edits and a later Back still flushes them.
-- Verify confirming Delete does not emit a trailing `saveMarkdown` for the deleted id.
+- Contract tests reject the former Markdown creation message and invalid save content.
+- Type-check the UI/Host/Store signatures together.
+- When interactive verification is authorized, confirm first-open creation, content reload, checklist persistence, Tab switching, focus states, and light/dark themes.
 
 ### 7. Wrong vs Correct
 
 ```typescript
-// Wrong: a delayed save response can force navigation.
-await this.refresh(message.id);
+// Wrong: the browser controls singleton metadata.
+post({ type: 'saveMarkdown', id, title, content });
 
-// Correct: saves refresh data without changing selection.
-await this.refresh();
+// Correct: the host owns metadata; the browser sends editable content only.
+post({ type: 'saveMarkdown', id, content });
 ```

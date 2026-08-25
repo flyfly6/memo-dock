@@ -11,7 +11,7 @@
 
 - A missing index means an empty store.
 - A missing indexed body is skipped during listing.
-- Deleting an already-missing body still removes its metadata.
+- Deleting an already-missing Snippet body still removes its metadata; Markdown has no Webview delete operation.
 - An unavailable snippet language falls back to plaintext while keeping the file editable.
 - Invalid/corrupt `index.json` is a visible error, not silently replaced.
 

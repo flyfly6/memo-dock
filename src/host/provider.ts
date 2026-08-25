@@ -30,8 +30,8 @@ export class MemoDockProvider implements vscode.WebviewViewProvider {
     });
   }
 
-  async refresh(focusId?: string): Promise<void> {
-    await this.post({ type: 'snapshot', items: await this.store.list(), focusId });
+  async refresh(): Promise<void> {
+    await this.post({ type: 'snapshot', items: await this.store.list() });
   }
 
   handleSavedDocument(uri: vscode.Uri): void {
@@ -52,26 +52,25 @@ export class MemoDockProvider implements vscode.WebviewViewProvider {
 
     switch (message.type) {
       case 'ready':
+        await this.store.ensureMarkdown();
         await this.refresh();
         return;
-      case 'create': {
-        const created = await this.store.create(message.kind, message.title, message.language);
-        await this.refresh(created.id);
-        if (created.kind === 'snippet') {
-          await this.openSnippet(created.id);
-        }
+      case 'createSnippet': {
+        const created = await this.store.createSnippet(message.title, message.language);
+        await this.refresh();
+        await this.openSnippet(created.id);
         return;
       }
       case 'saveMarkdown':
-        await this.store.saveMarkdown(message.id, message.title, message.content);
+        await this.store.saveMarkdown(message.id, message.content);
         await this.refresh();
         return;
       case 'updateSnippet':
         await this.store.updateSnippet(message.id, message.title, message.language);
         await this.refresh();
         return;
-      case 'deleteItem':
-        await this.store.delete(message.id);
+      case 'deleteSnippet':
+        await this.store.deleteSnippet(message.id);
         await this.refresh();
         return;
       case 'openSnippet':
