@@ -3,7 +3,7 @@
   "name": "vscode-memo-extension",
   "title": "Initialize VS Code Memo Extension",
   "description": "Initialize Memo Dock as a profile-global VS Code Markdown and snippet sidebar extension, then configure Trellis from the implementation.",
-  "status": "in_progress",
+  "status": "completed",
   "dev_type": "feature",
   "scope": "vscode-extension",
   "package": null,
@@ -11,7 +11,7 @@
   "creator": "flyfly6",
   "assignee": "flyfly6",
   "createdAt": "2026-08-24",
-  "completedAt": null,
+  "completedAt": "2026-08-25",
   "branch": null,
   "base_branch": "main",
   "worktree_path": null,
@@ -20,7 +20,12 @@
   "subtasks": [],
   "children": [],
   "parent": null,
-  "relatedFiles": ["package.json", "src/", ".trellis/spec/backend/", ".trellis/spec/frontend/"],
+  "relatedFiles": [
+    "package.json",
+    "src/",
+    ".trellis/spec/backend/",
+    ".trellis/spec/frontend/"
+  ],
   "notes": "",
   "meta": {}
 }
