@@ -1,5 +1,6 @@
 import {
   BlockNoteSchema,
+  createExtension,
   defaultBlockSpecs,
   defaultInlineContentSpecs,
   defaultStyleSpecs,
@@ -15,6 +16,7 @@ import {
 } from '@blocknote/react';
 import { useEffect, useRef } from 'react';
 import type { ItemSnapshot } from '../shared/contracts';
+import { getCompletedChecklistMove, insertUncheckedChecklistAbove } from './checklist';
 
 const schema = BlockNoteSchema.create({
   blockSpecs: {
@@ -32,6 +34,13 @@ const schema = BlockNoteSchema.create({
     italic: defaultStyleSpecs.italic,
     strike: defaultStyleSpecs.strike,
     code: defaultStyleSpecs.code,
+  },
+});
+
+const insertChecklistAbove = createExtension({
+  key: 'insertChecklistAbove',
+  keyboardShortcuts: {
+    'Mod-Alt-Enter': ({ editor }) => insertUncheckedChecklistAbove(editor),
   },
 });
 
@@ -56,7 +65,7 @@ interface MarkdownEditorProps {
 }
 
 export function MarkdownEditor({ item, theme, onSave }: MarkdownEditorProps) {
-  const editor = useCreateBlockNote({ schema });
+  const editor = useCreateBlockNote({ schema, extensions: [insertChecklistAbove] });
   const saveRef = useRef(onSave);
   const timerRef = useRef<number | undefined>(undefined);
   const loadedIdRef = useRef<string | undefined>(undefined);
@@ -99,7 +108,13 @@ export function MarkdownEditor({ item, theme, onSave }: MarkdownEditorProps) {
         <BlockNoteView
           editor={editor}
           theme={theme}
-          onChange={() => saveSoon(editor)}
+          onChange={(currentEditor, { getChanges }) => {
+            const move = getCompletedChecklistMove(currentEditor.document, getChanges());
+            if (move) {
+              currentEditor.replaceBlocks(...move);
+            }
+            saveSoon(currentEditor);
+          }}
           slashMenu
           sideMenu={false}
         >

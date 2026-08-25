@@ -10,6 +10,7 @@ import {
   TextInput,
   UnstyledButton,
 } from '@mantine/core';
+import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { useEffect, useMemo, useState } from 'react';
 import { filterItems } from '../shared/filter';
 import {
@@ -168,19 +169,6 @@ export function App() {
               <Tabs.Tab value="snippet">Snippets</Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          {tab === 'snippet' && (
-            <Button
-              className="new-button"
-              leftSection={
-                <span className="new-mark" aria-hidden="true">
-                  ＋
-                </span>
-              }
-              onClick={() => setForm({ title: '', language: 'typescript' })}
-            >
-              New
-            </Button>
-          )}
         </header>
 
         {tab === 'markdown' ? (
@@ -205,9 +193,16 @@ export function App() {
                 onChange={(event) => setQuery(event.currentTarget.value)}
                 placeholder="Search snippets"
                 aria-label="Search snippets"
-                leftSection={<span aria-hidden="true">⌕</span>}
+                leftSection={<IconSearch size={14} stroke={1.75} aria-hidden="true" />}
                 leftSectionPointerEvents="none"
               />
+              <Button
+                className="new-button"
+                leftSection={<IconPlus size={14} stroke={2} aria-hidden="true" />}
+                onClick={() => setForm({ title: '', language: 'typescript' })}
+              >
+                New
+              </Button>
             </div>
 
             {form && (
