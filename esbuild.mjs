@@ -39,6 +39,7 @@ const builds = [
 if (process.argv.includes('--watch')) {
   const contexts = await Promise.all(builds.map((options) => esbuild.context(options)));
   await Promise.all(contexts.map((context) => context.watch()));
+  console.log('[watch] ready');
 } else {
   await Promise.all(builds.map((options) => esbuild.build(options)));
 }
