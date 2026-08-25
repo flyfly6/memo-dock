@@ -1,0 +1,10 @@
+.agents/**
+.codex/**
+.trellis/**
+.vscode/**
+src/**
+test/**
+node_modules/**
+*.mjs
+tsconfig.json
+package-lock.json

@@ -1,0 +1,345 @@
+:root {
+  color-scheme: light dark;
+  font-family: var(--vscode-font-family);
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 220px;
+  background: var(--vscode-sideBar-background);
+  color: var(--vscode-foreground);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: var(--vscode-foreground);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: 1px;
+}
+
+.app-shell,
+.editor-view {
+  min-height: 100vh;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 14px 12px 10px;
+  background: color-mix(in srgb, var(--vscode-sideBar-background) 94%, transparent);
+  border-bottom: 1px solid var(--vscode-sideBar-border, var(--vscode-widget-border));
+  backdrop-filter: blur(10px);
+}
+
+.brand-row,
+.editor-toolbar,
+.form-actions,
+.item-row,
+.row-actions {
+  display: flex;
+  align-items: center;
+}
+
+.brand-row {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.eyebrow {
+  color: var(--vscode-descriptionForeground);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+h1 {
+  margin: 2px 0 0;
+  font-size: 18px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.primary-button,
+.item-form button,
+.row-actions button,
+.icon-button {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primary-button {
+  padding: 5px 9px;
+  color: var(--vscode-button-foreground);
+  background: var(--vscode-button-background);
+}
+
+.primary-button:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+.primary-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.new-button {
+  flex: none;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  margin-top: 13px;
+  padding: 3px;
+  border-radius: 6px;
+  background: var(--vscode-editorWidget-background);
+}
+
+.tab {
+  padding: 5px 6px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--vscode-descriptionForeground);
+  background: transparent;
+  cursor: pointer;
+}
+
+.tab.active {
+  color: var(--vscode-foreground);
+  background: var(--vscode-list-activeSelectionBackground);
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 9px;
+  padding: 0 7px;
+  border: 1px solid var(--vscode-input-border, transparent);
+  background: var(--vscode-input-background);
+}
+
+.search-field:focus-within {
+  border-color: var(--vscode-focusBorder);
+}
+
+.search-field span {
+  color: var(--vscode-descriptionForeground);
+  font-size: 16px;
+}
+
+.search-field input,
+.item-form input,
+.title-input {
+  width: 100%;
+  color: var(--vscode-input-foreground);
+  background: var(--vscode-input-background);
+  border: 0;
+}
+
+.search-field input {
+  height: 28px;
+  outline: 0;
+}
+
+.item-form {
+  display: grid;
+  gap: 7px;
+  margin: 10px 12px 2px;
+  padding: 10px;
+  border: 1px solid var(--vscode-focusBorder);
+  border-radius: 6px;
+  background: var(--vscode-editorWidget-background);
+}
+
+.item-form input {
+  height: 28px;
+  padding: 0 7px;
+  border: 1px solid var(--vscode-input-border, transparent);
+}
+
+.form-actions {
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.item-form button,
+.row-actions button {
+  padding: 4px 7px;
+  background: transparent;
+}
+
+.item-list {
+  padding: 8px;
+}
+
+.item-row {
+  gap: 4px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.item-row:hover {
+  background: var(--vscode-list-hoverBackground);
+  border-color: var(--vscode-widget-border, transparent);
+}
+
+.item-main {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 3px;
+  padding: 8px;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.item-main strong,
+.item-main span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-main strong {
+  font-size: 12px;
+}
+
+.item-main span {
+  color: var(--vscode-descriptionForeground);
+  font-size: 10px;
+}
+
+.row-actions {
+  flex: none;
+  gap: 1px;
+  padding-right: 3px;
+  opacity: 0;
+}
+
+.item-row:hover .row-actions,
+.item-row:focus-within .row-actions {
+  opacity: 1;
+}
+
+.row-actions button {
+  color: var(--vscode-descriptionForeground);
+  font-size: 10px;
+}
+
+.danger-button:hover {
+  color: var(--vscode-errorForeground);
+  background: var(--vscode-inputValidation-errorBackground);
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  min-height: 180px;
+  padding: 24px;
+  text-align: center;
+  color: var(--vscode-descriptionForeground);
+}
+
+.empty-state span {
+  color: var(--vscode-foreground);
+  font-weight: 600;
+}
+
+.editor-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  gap: 7px;
+  padding: 8px;
+  border-bottom: 1px solid var(--vscode-sideBar-border, var(--vscode-widget-border));
+  background: var(--vscode-sideBar-background);
+}
+
+.icon-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+}
+
+.title-input {
+  height: 30px;
+  padding: 0 7px;
+  font-weight: 650;
+}
+
+.editor-canvas {
+  min-height: calc(100vh - 47px);
+  padding: 12px 2px 48px 18px;
+  background:
+    linear-gradient(var(--vscode-sideBar-background), var(--vscode-sideBar-background)) padding-box,
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 27px,
+      color-mix(in srgb, var(--vscode-widget-border) 30%, transparent) 28px
+    );
+}
+
+.bn-container,
+.bn-editor {
+  max-width: none;
+  min-height: 100%;
+  color: var(--vscode-editor-foreground);
+  background: transparent !important;
+  font-family: var(--vscode-editor-font-family) !important;
+  font-size: var(--vscode-editor-font-size) !important;
+}
+
+.bn-editor {
+  padding: 8px 8px 80px 18px !important;
+}
+
+.toast {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 20;
+  max-width: calc(100% - 20px);
+  padding: 7px 10px;
+  border: 1px solid var(--vscode-notifications-border, var(--vscode-widget-border));
+  border-radius: 5px;
+  color: var(--vscode-notifications-foreground);
+  background: var(--vscode-notifications-background);
+  box-shadow: 0 4px 16px var(--vscode-widget-shadow);
+  font-size: 11px;
+}
+
+body.vscode-high-contrast .item-row,
+body.vscode-high-contrast .tabs,
+body.vscode-high-contrast .item-form {
+  border: 1px solid var(--vscode-contrastBorder);
+}
+
+@media (max-width: 270px) {
+  .row-actions button:not(.danger-button) {
+    padding-inline: 3px;
+  }
+}

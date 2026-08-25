@@ -1,0 +1,6 @@
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"Check the complete message and data flow across webview, extension host, storage, and native editor boundaries."}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"Check for duplicated message parsing, persistence, state, or editor behavior."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/vscode-webview-boundaries.md","reason":"Verify contribution points, nonce CSP, restricted resources, message validation, theming, and accessibility assumptions."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/profile-storage-and-native-snippets.md","reason":"Verify profile-local persistence, id-based paths, native language selection, save refresh, and clipboard behavior."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/blocknote-capabilities.md","reason":"Verify BlockNote is restricted to Markdown-compatible blocks, versions are compatible, and no XL package is introduced."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/typescript-esbuild-tooling.md","reason":"Verify bundle boundaries and the required formatting, lint, type-check, and test commands without build-based validation."}

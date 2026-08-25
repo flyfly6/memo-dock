@@ -1,0 +1,6 @@
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"Keep webview messages, extension-host validation, persistence, and UI snapshots aligned across the runtime boundary."}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"Reuse one message contract, one persistence path, and BlockNote native behavior instead of duplicating helpers."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/vscode-webview-boundaries.md","reason":"Implement the Activity Bar WebviewView, CSP, resources, messaging, and theme integration against verified VS Code boundaries."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/profile-storage-and-native-snippets.md","reason":"Implement profile-local storage and native snippet editing with URI-based VS Code APIs."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/blocknote-capabilities.md","reason":"Use BlockNote 0.54.0 slash, block drag, checklist, and constrained Markdown conversion within its license and React boundaries."}
+{"file":".trellis/tasks/08-24-vscode-memo-extension/research/typescript-esbuild-tooling.md","reason":"Initialize the minimal split extension/webview TypeScript toolchain and targeted checks."}

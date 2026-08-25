@@ -1,0 +1,79 @@
+{
+  "name": "memo-dock",
+  "displayName": "Memo Dock",
+  "description": "Profile-wide Markdown notes and code snippets in the VS Code sidebar.",
+  "version": "0.0.1",
+  "publisher": "flyfly6",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "vscode": "^1.117.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "memoDock",
+          "title": "Memo Dock",
+          "icon": "media/memo-dock.svg"
+        }
+      ]
+    },
+    "views": {
+      "memoDock": [
+        {
+          "type": "webview",
+          "id": "memoDock.sidebar",
+          "name": "Memo Dock"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "vscode:prepublish": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src test esbuild.mjs eslint.config.mjs",
+    "format": "prettier --write .",
+    "test": "node --import tsx --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@blocknote/core": "0.54.0",
+    "@blocknote/mantine": "0.54.0",
+    "@blocknote/react": "0.54.0",
+    "@mantine/core": "^8.3.11",
+    "@mantine/hooks": "^8.3.11",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/vscode": "1.116.0",
+    "esbuild": "0.28.2",
+    "eslint": "^9.39.2",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.67.0"
+  },
+  "overrides": {
+    "@tiptap/core": "3.30.2",
+    "@tiptap/extension-bold": "3.30.2",
+    "@tiptap/extension-code": "3.30.2",
+    "@tiptap/extension-italic": "3.30.2",
+    "@tiptap/extension-strike": "3.30.2",
+    "@tiptap/extension-text": "3.30.2",
+    "@tiptap/extension-underline": "3.30.2",
+    "@tiptap/extensions": "3.30.2",
+    "@tiptap/pm": "3.30.2",
+    "@tiptap/react": "3.30.2"
+  }
+}
