@@ -2,9 +2,15 @@
 .codex/**
 .trellis/**
 .vscode/**
+.gitignore
+.prettierignore
+.prettierrc.json
+AGENTS.md
 src/**
 test/**
 node_modules/**
+dist/*.map
 *.mjs
 tsconfig.json
 package-lock.json
+*.vsix

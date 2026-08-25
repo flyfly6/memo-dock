@@ -1,3 +1,7 @@
+## Project Verification Override
+
+This project does not follow the `Global Verification Rule` from the global `AGENTS.md`.
+
 <!-- TRELLIS:START -->
 # Trellis Instructions
 

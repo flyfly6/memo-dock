@@ -47,3 +47,33 @@
 ### Status
 
 [OK] **Completed**
+
+
+## Session 3: Plugin development and release workflow
+
+**Date**: 2026-08-25
+**Task**: Plugin development and release workflow
+**Branch**: `main`
+
+### Summary
+
+Added DLP-safe watch builds, VSCE packaging and publishing scripts, clean VSIX contents, MIT licensing, and project verification guidance.
+
+### Main Changes
+
+- Added dev, package, and publish npm scripts with pinned VSCE tooling.
+- Made esbuild work with enterprise DLP and BlockNote CSS exports.
+- Added MIT licensing and release-package exclusions.
+
+### Git Commits
+
+(No commits - planning session)
+
+### Testing
+
+- [OK] VSIX package succeeded with 9 expected files and no license warning.
+- [OK] Prettier, ESLint, TypeScript, Node tests, and git diff checks passed.
+
+### Status
+
+[OK] **Completed**
