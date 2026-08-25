@@ -77,3 +77,25 @@ Added DLP-safe watch builds, VSCE packaging and publishing scripts, clean VSIX c
 ### Status
 
 [OK] **Completed**
+
+
+## Session 4: Markdown editor page
+
+**Date**: 2026-08-25
+**Task**: Markdown editor page
+**Branch**: `main`
+
+### Summary
+
+Simplified Markdown into a singleton editor, redesigned the Mantine-based UI, retained only the BlockNote drag handle, and added an extensionHost watch launch configuration.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `0dd8302` | (see git log) |
+| `f9fb9ad` | (see git log) |
+
+### Status
+
+[OK] **Completed**
