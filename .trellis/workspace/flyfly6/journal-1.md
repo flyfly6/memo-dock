@@ -99,3 +99,24 @@ Simplified Markdown into a singleton editor, redesigned the Mantine-based UI, re
 ### Status
 
 [OK] **Completed**
+
+
+## Session 5: Refine sidebar checklist workflow
+
+**Date**: 2026-08-25
+**Task**: Refine sidebar checklist workflow
+**Branch**: `main`
+
+### Summary
+
+Fixed sidebar scrolling and Snippet toolbar layout, replaced character icons with Tabler icons, added completed-checklist ordering and the IntelliJ insert-above shortcut, and covered the behavior with tests and specs.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `562324e` | (see git log) |
+
+### Status
+
+[OK] **Completed**

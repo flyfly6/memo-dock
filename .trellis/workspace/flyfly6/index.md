@@ -8,7 +8,7 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 4
+- **Total Sessions**: 5
 - **Last Active**: 2026-08-25
 <!-- @@@/auto:current-status -->
 
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~101 | Active |
+| `journal-1.md` | ~122 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 5 | 2026-08-25 | Refine sidebar checklist workflow | `562324e` | `main` |
 | 4 | 2026-08-25 | Markdown editor page | `0dd8302`, `f9fb9ad` | `main` |
 | 3 | 2026-08-25 | Plugin development and release workflow | - | `main` |
 | 2 | 2026-08-25 | 完成 Trellis 规范引导 | `597dc4e` | `main` |
