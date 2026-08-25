@@ -26,3 +26,24 @@
 ### Status
 
 [OK] **Completed**
+
+
+## Session 2: 完成 Trellis 规范引导
+
+**Date**: 2026-08-25
+**Task**: 完成 Trellis 规范引导
+**Branch**: `main`
+
+### Summary
+
+复核后端与前端 Trellis 规范，定向检查全部通过，并归档 bootstrap guidelines 任务。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `597dc4e` | (see git log) |
+
+### Status
+
+[OK] **Completed**
