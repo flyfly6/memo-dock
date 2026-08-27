@@ -2,7 +2,7 @@
   "name": "memo-dock",
   "displayName": "Memo Dock",
   "description": "Profile-wide Markdown notes and code snippets in the VS Code sidebar.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "flyfly6",
   "repository": {
     "type": "git",
