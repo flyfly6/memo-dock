@@ -9,6 +9,7 @@
     "url": "git+https://github.com/flyfly6/memo-dock.git"
   },
   "license": "MIT",
+  "icon": "media/memo-dock.png",
   "private": true,
   "engines": {
     "vscode": "^1.117.0"
